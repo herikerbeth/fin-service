@@ -1,14 +1,29 @@
 package fin_service.domain.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity(name = "tb_user")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Double id;
+
     private String name;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Account account;
-    private List<Feature> features;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Card card;
-    private List<New> news;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Feature> features;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<News> news;
 
     public String getName() {
         return name;
@@ -42,11 +57,11 @@ public class User {
         this.card = card;
     }
 
-    public List<New> getNews() {
+    public List<News> getNews() {
         return news;
     }
 
-    public void setNews(List<New> news) {
+    public void setNews(List<News> news) {
         this.news = news;
     }
 }
