@@ -6,7 +6,7 @@ public class User {
 
     private String name;
     private Account account;
-    private List<Features> features;
+    private List<Feature> features;
     private Card card;
     private List<New> news;
 
@@ -26,11 +26,11 @@ public class User {
         this.account = account;
     }
 
-    public List<Features> getFeatures() {
+    public List<Feature> getFeatures() {
         return features;
     }
 
-    public void setFeatures(List<Features> features) {
+    public void setFeatures(List<Feature> features) {
         this.features = features;
     }
 
