@@ -1,13 +1,34 @@
 package fin_service.domain.model;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
+@Entity(name = "tb_account")
 public class Account {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
     private String number;
+
     private String agency;
+
+    @Column(scale = 13, precision = 2)
     private BigDecimal balance;
+
+    @Column(scale = 13, precision = 2)
     private BigDecimal limit;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNumber() {
         return number;
