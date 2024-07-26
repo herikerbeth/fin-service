@@ -8,9 +8,6 @@ import lombok.*;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 
 @MappedSuperclass
 public abstract class BaseItem {
