@@ -83,4 +83,54 @@ public class UserControllerTests {
                 .andExpect(jsonPath("$.news[0].icon", is(user.getNews().get(0).getIcon())))
                 .andExpect(jsonPath("$.news[0].description", is(user.getNews().get(0).getDescription())));
     }
+
+    // positive scenario - valid user id
+    // JUnit test for GET user by id REST API
+    @Test
+    void givenUserId_whenGetUserById_thenReturnUserObject() throws Exception {
+
+        // given - precondition or setup
+        Long userId = 1L;
+        Account account = Account.builder()
+                .number("0000000-0")
+                .agency("0000")
+                .balance(new BigDecimal("1234.64"))
+                .limit(new BigDecimal("1000.00"))
+                .build();
+        Feature feature = new Feature("URL", "Descrição da Feature");
+        Card card = Card.builder()
+                .number("xxxx xxxx xxxx 0000")
+                .limit(new BigDecimal("1000.00"))
+                .build();
+        News news = new News("URL", "Descrição da News");
+        User user = User.builder()
+                .name("Venilton")
+                .account(account)
+                .features(List.of(feature))
+                .card(card)
+                .news(List.of(news))
+                .build();
+
+        given(userService.findById(userId))
+                .willReturn(user);
+
+        // when - action or behaviour that we are going test
+        ResultActions response = mockMvc.perform(get("/users/{id}", userId));
+
+        // then - verify the result or output using assert statements
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.account.number", is(user.getAccount().getNumber())))
+                .andExpect(jsonPath("$.account.agency", is(user.getAccount().getAgency())))
+                .andExpect(jsonPath("$.account.balance", is(user.getAccount().getBalance().doubleValue())))
+                .andExpect(jsonPath("$.account.limit", is(user.getAccount().getLimit().doubleValue())))
+                .andExpect(jsonPath("$.features[0].icon", is(user.getFeatures().get(0).getIcon())))
+                .andExpect(jsonPath("$.features[0].description", is(user.getFeatures().get(0).getDescription())))
+                .andExpect(jsonPath("$.card.number", is(user.getCard().getNumber())))
+                .andExpect(jsonPath("$.card.limit", is(user.getCard().getLimit().doubleValue())))
+                .andExpect(jsonPath("$.news[0].icon", is(user.getNews().get(0).getIcon())))
+                .andExpect(jsonPath("$.news[0].description", is(user.getNews().get(0).getDescription())));
+
+    }
 }
